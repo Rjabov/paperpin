@@ -1,0 +1,96 @@
+[build-system]
+requires = ["hatchling", "hatch-fancy-pypi-readme"]
+build-backend = "hatchling.build"
+
+[project]
+name = "paperpin"
+version = "0.1.0"
+description = "Pin every value an LLM extracts from a document to the exact spot on the page it came from, and flag the values that aren't there at all."
+dynamic = ["readme"]
+license = "MIT"
+requires-python = ">=3.10"
+authors = [{ name = "Rjabov" }]
+keywords = [
+    "ocr", "document-extraction", "grounding", "llm",
+    "hallucination-detection", "invoice", "pdf", "document-ai",
+    "information-extraction", "bounding-boxes", "verification",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+    "Topic :: Text Processing",
+]
+dependencies = [
+    "pillow>=10.0",
+    "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+# default recommended install: pip install paperpin[full]
+pdf = ["pdfplumber>=0.11"]
+# rapidocr brings its own opencv-python; pinning headless too put TWO cv2
+# owners in one env (uninstalling either broke the other)
+ocr = ["rapidocr-onnxruntime>=1.2"]
+heic = ["pillow-heif>=0.13"]
+full = [
+    "pdfplumber>=0.11",
+    "rapidocr-onnxruntime>=1.2",
+    "pillow-heif>=0.13",
+]
+lab = ["fastapi>=0.110", "uvicorn>=0.29", "python-multipart>=0.0.9"]
+dev = ["pytest>=8.0", "reportlab>=4.0", "httpx>=0.27"]
+
+[project.scripts]
+paperpin = "paperpin.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Rjabov/paperpin"
+Repository = "https://github.com/Rjabov/paperpin"
+Issues = "https://github.com/Rjabov/paperpin/issues"
+
+# GitHub renders the relative image/file links in README.md; PyPI cannot,
+# so the long description gets absolute URLs substituted at build time.
+[tool.hatch.metadata.hooks.fancy-pypi-readme]
+content-type = "text/markdown"
+fragments = [{ path = "README.md" }]
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
+pattern = 'src="docs/assets/'
+replacement = 'src="https://raw.githubusercontent.com/Rjabov/paperpin/main/docs/assets/'
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
+pattern = '\]\((fixtures/|tests/|examples/|CONTRIBUTING\.md|SECURITY\.md|LICENSE)'
+replacement = '](https://github.com/Rjabov/paperpin/blob/main/\g<1>'
+
+[tool.hatch.build.targets.wheel]
+packages = ["paperpin"]
+
+[tool.hatch.build.targets.sdist]
+# explicit allowlist: the default VCS walk shipped .claude worktree files and
+# the whole lab/web node tree in the public tarball
+include = [
+  "paperpin",
+  "tests",
+  "fixtures/corpus",
+  "fixtures/demo",
+  "bench",
+  "examples",
+  "README.md",
+  "CHANGELOG.md",
+  "LICENSE",
+  "pyproject.toml",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "slow: OCR-heavy end-to-end tests (degradation matrix)",
+]

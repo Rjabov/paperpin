@@ -1,0 +1,25 @@
+name: Feature request
+description: Something paperpin should pin, verify, or flag that it doesn't today.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What are you trying to do, on what kind of documents?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you'd like
+      description: >
+        Keep the contract in mind: paperpin never guesses silently. A
+        feature that would replace an honest `not_found` with a guess is
+        out of scope by design.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Workarounds you've tried

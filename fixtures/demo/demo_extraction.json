@@ -1,0 +1,22 @@
+{
+  "supplier_name": "Havel & Kraus Paper s.r.o.",
+  "supplier_vat_id": "CZ48321099",
+  "supplier_reg_no": "48321099",
+  "customer_name": "Bramwell Studio Ltd",
+  "customer_vat_no": "GB 428 9017 55",
+  "invoice_number": "2026-0847",
+  "variable_symbol": "20260847",
+  "issue_date": "04.08.2026",
+  "taxable_supply_date": "01.08.2026",
+  "due_date": "18.08.2026",
+  "payment_method": "bank transfer",
+  "order_ref": "PO-1193",
+  "bank": "Vltava Bank a.s., Praha",
+  "iban": "CZ23 2222 0000 0047 1823 0267",
+  "swift": "VLTBCZPP",
+  "currency": "EUR",
+  "total_excl_vat": "2 038.40",
+  "vat_total": "386.14",
+  "total_due": "2 424.54",
+  "approved_by": "M. Sedláčková"
+}

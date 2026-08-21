@@ -1,0 +1,54 @@
+name: Bug report
+description: A status lied, a box drifted, a crash: anything that misbehaved.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Please never attach a real person's or company's document.**
+        Redact it, or reproduce on a synthetic document
+        (`python fixtures/demo/demo_invoice.py` builds one you can edit).
+  - type: input
+    id: version
+    attributes:
+      label: paperpin version
+      description: "`python -c \"import paperpin; print(paperpin.__version__)\"`"
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: intake
+    attributes:
+      label: Document kind
+      options:
+        - PDF with a text layer
+        - Scanned PDF (OCR)
+        - Photo (jpg/heic/png)
+        - Multi-page / mixed
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: >
+        Which field, which status did it return, and what should it have
+        been? Paste the relevant slice of the result JSON if you can.
+      placeholder: |
+        extraction: {"total": "146,14"}
+        got:  total → verified, bbox points at the VAT line
+        expected: the TOTAL DUE line, or low_confidence/ambiguous
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to reproduce
+      description: Exact call (code or CLI) + the document, redacted or synthetic.
+      render: python
+  - type: textarea
+    id: env
+    attributes:
+      label: Environment
+      placeholder: "macOS 15 / Python 3.12 / paperpin[full], installed from PyPI"

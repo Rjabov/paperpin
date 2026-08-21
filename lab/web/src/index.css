@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+/* paperpin lab — registrar theme: an archive desk, not a scanner.
+   Manila ground, paper cards, ink type. Flat by rule; the only element
+   allowed to perform is the not_found stamp (see .stamp). */
+:root {
+  --bg: #e8e4da;
+  --bg2: #eae7df;
+  --panel: #f7f4ec;
+  --panel2: #efebe0;
+  --line: #b8b2a2;
+  --text: #22251f;
+  --muted: #8a8378;
+  --ok: #3d7a4a;
+  --warn: #b07d2b;
+  --amb: #c25e2e;
+  --bad: #a04a3a;
+  --np: #8a8378;
+  --accent: #d64030;
+  --accent2: #2b69a6;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+}
+
+html, body, #root { height: 100%; margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.5 var(--display);
+  font-weight: 500;
+  overflow: hidden;
+}
+
+.paper { background: var(--bg); }
+
+.label {
+  font-family: var(--display);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* The one element allowed to perform: the refused-to-guess verdict. */
+.stamp {
+  display: inline-block;
+  font-family: var(--display);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bad);
+  border: 1.5px solid var(--bad);
+  border-radius: 2px;
+  padding: 1px 6px;
+  transform: rotate(-2deg);
+}
+
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-thumb { background: var(--line); border-radius: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+.box-pin { position: absolute; border: 1.5px solid; border-radius: 1px; cursor: pointer; }
+.box-pin.verified { border-color: var(--ok); background: rgba(61, 122, 74, 0.10); }
+.box-pin.low_confidence { border-color: var(--warn); background: rgba(176, 125, 43, 0.12); }
+.box-pin.ambiguous { border-color: var(--amb); border-style: dashed; background: rgba(194, 94, 46, 0.10); }
+.box-pin.selected { outline: 2px solid var(--text); outline-offset: 2px; z-index: 5; }
+.box-pin.candidate { opacity: 0.65; background: transparent; }
+.box-pin .pin-label {
+  position: absolute; top: -17px; left: -2px; font-size: 9.5px; font-family: var(--mono);
+  background: var(--text); color: var(--panel); padding: 1px 6px;
+  border-radius: 2px; white-space: nowrap; letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0; transition: opacity .12s;
+}
+.box-pin:hover .pin-label, .box-pin.selected .pin-label { opacity: 1; }
+
+/* The model's own claim — always dashed, always the alt blue, so it can
+   never be confused with a paperpin pin. */
+.model-box {
+  position: absolute;
+  border: 1.5px dashed var(--accent2);
+  border-radius: 1px;
+  cursor: pointer;
+  z-index: 2;
+}
+.model-box.selected { outline: 2px solid var(--accent2); outline-offset: 2px; z-index: 5; }
+.model-box .pin-label { background: var(--accent2); opacity: 0; }
+.model-box:hover .pin-label, .model-box.selected .pin-label { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

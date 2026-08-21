@@ -1,0 +1,47 @@
+# Contributing
+
+Thank you for looking under the hood.
+
+## The fastest way to help
+
+**Open an issue with a document where a status lied.** A `verified` that
+points at the wrong place, a `not_found` for a value that is plainly on
+the page, a box that drifts: these are the bugs that matter. Use the bug
+template; it asks for the paperpin version, the document kind, and what
+each field returned. **Never attach a real person's or company's
+document**. Redact it, or reproduce the failure on a synthetic one
+(`fixtures/demo/demo_invoice.py` shows how we build those).
+
+Feature ideas are welcome too. Statuses are the contract: anything that
+would make paperpin guess silently instead of saying `not_found` /
+`ambiguous` out loud is out of scope by design.
+
+## Pull requests
+
+Please open an issue first so the approach can be agreed before you spend
+an evening on it. Small, focused PRs merge fast; drive-by refactors don't.
+
+## Running the tests
+
+```bash
+pip install -e ".[full,dev]"
+pytest -q                 # fast gate, must stay green
+pytest -q -m slow         # degraded gate: OCR degradation matrix (slower)
+```
+
+Both gates green = safe to push. The fast gate runs the synthetic corpus
+end-to-end (`fixtures/corpus`), so matcher and schema changes are
+exercised on every run.
+
+For the Lab frontend:
+
+```bash
+cd lab/web && npm ci && npm run build
+```
+
+## Code shape
+
+- Python ≥ 3.10, no new runtime dependencies without discussion.
+- The core stays domain-free: document-type guessing lives only in
+  schema enrichment, never in intake/align/verify.
+- Every behavior change comes with a test that fails without it.

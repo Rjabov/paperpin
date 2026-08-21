@@ -1,0 +1,53 @@
+# --- privacy: real documents and anything derived from them (NEVER commit) ---
+private_fixtures/
+docs/internal/
+*.env
+.env
+.env.local
+!.env.example
+
+# --- secrets ---
+*.key
+*_key*
+credentials*
+
+# --- python ---
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# --- node / lab frontend ---
+node_modules/
+lab/web/dist/
+
+# --- local app data ---
+.paperpin/
+*.sqlite
+*.sqlite3
+*.db
+
+# --- OS noise ---
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# --- scratch ---
+scratch/
+*.tmp
+
+# --- regenerable (bench/degrade.py from committed corpus PDFs) ---
+fixtures/degraded/
+
+# --- local tooling ---
+.claude/
+
+.superpowers/
