@@ -71,3 +71,6 @@ cd lab/web && npm ci && npm run build
 - The core stays domain-free: document-type guessing lives only in
   schema enrichment, never in intake/align/verify.
 - Every behavior change comes with a test that fails without it.
+- Laws that must hold for *every* input — a bbox surviving a transform
+  chain, a checksum catching a typo — belong in `tests/test_properties.py`
+  as Hypothesis properties, not as three hand-picked examples.

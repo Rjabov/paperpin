@@ -20,6 +20,7 @@ __pycache__/
 dist/
 build/
 .pytest_cache/
+.hypothesis/
 .ruff_cache/
 .mypy_cache/
 .coverage
