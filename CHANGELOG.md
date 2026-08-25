@@ -21,9 +21,11 @@ All notable changes to paperpin are documented here. The format follows
 - Test layers (`unit` / `integration` / `contract` / `e2e` / `security` /
   `perf`), applied from one mapping and enforced at collection, so a
   single layer can be run on its own.
-- A coverage floor CI enforces, property-based tests for the laws that
-  must hold on every input, and performance gates on line-item matching
-  and pipeline work volume.
+- Coverage floors CI enforces over every job's data combined — one for
+  the core engine, a lower one for the package — plus property-based
+  tests for the laws that must hold on every input, performance gates on
+  line-item matching and pipeline work volume, and adapter tests that
+  fake the network.
 
 ### Removed
 

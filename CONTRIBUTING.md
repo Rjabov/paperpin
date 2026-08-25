@@ -42,9 +42,22 @@ pytest -q -m security     # each test pins a demonstrated fix
 
 The layers live in one mapping in `tests/conftest.py`; a new test module
 that is not in it fails collection rather than quietly belonging to
-nothing. The coverage floor in `pyproject.toml` ratchets up as gaps close
-— lowering it is something to argue for in a PR, not a fix for a red
-build.
+nothing.
+
+Coverage is enforced **twice**, over the data from every CI job combined
+(the matrix and the OCR gates both publish theirs — OCR-only code reads
+35% from the fast suite and 79% from the degraded one, and counting only
+the first made tested code look untested):
+
+- the **core engine** — align, verify, geometry, intake, outputs, types,
+  schemas, api — is held to a higher floor than the package average, so a
+  gain in the periphery can never hide the core rotting;
+- the **whole package** has its own floor.
+
+Both ratchet up as gaps close. Lowering either is something to argue for
+in a PR, not a fix for a red build. Locally `pytest --cov` checks the
+package floor only, against the fast suite; the core floor lives in
+`.github/workflows/ci.yml` alongside the combine step.
 
 Both gates green = safe to push. The fast gate runs the synthetic corpus
 end-to-end (`fixtures/corpus`), so matcher and schema changes are

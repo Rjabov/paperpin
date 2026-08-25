@@ -111,12 +111,20 @@ markers = [
 source = ["paperpin"]
 branch = true          # a taken `if` with an untaken `else` is not covered
 
+[tool.coverage.paths]
+# CI combines data from 12 matrix cells plus the OCR job. Windows records
+# backslash paths and the others record forward slashes; without this,
+# combine treats them as different files and the totals are nonsense.
+source = ["paperpin", "*/paperpin", '*\paperpin']
+
 [tool.coverage.report]
 show_missing = true
-# Set from the baseline the day the gate went in. It ratchets UP as gaps
-# close; lowering it is a decision to argue for in a PR, never a quick fix
-# for a red build — same rule as the degraded-tier thresholds.
-fail_under = 80
+# The fast suite alone, which is what `pytest --cov` runs locally. CI gates
+# on more: it combines every job's data (the OCR job lifts the OCR backend
+# from 35% to 75%) and holds the core engine to a separate, higher floor.
+# All three ratchet UP as gaps close; lowering one is a decision to argue
+# for in a PR, never a quick fix for a red build.
+fail_under = 83
 exclude_also = [
   "if __name__ == .__main__.:",
 ]

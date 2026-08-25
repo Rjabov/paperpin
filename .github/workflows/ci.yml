@@ -27,12 +27,19 @@ jobs:
         # Windows runners pay a cold-filesystem tax on first import;
         # the regression guard still bites at the higher bound.
         run: python -c "import time, os; t=time.perf_counter(); import paperpin; d=time.perf_counter()-t; budget = 6.0 if os.name == 'nt' else 2.5; print(f'import {d:.2f}s (budget {budget}s)'); assert d < budget"
-      - name: Fast tests (unit + text-layer e2e) with the coverage floor
-        run: pytest -q -m "not slow" --cov
-      - name: Coverage summary
-        if: always()
-        shell: bash
-        run: '{ echo "### Coverage"; echo; echo "```"; coverage report; echo "```"; } >> "$GITHUB_STEP_SUMMARY"'
+      - name: Fast tests (unit + text-layer e2e)
+        # The floor is enforced once, in the `coverage` job, over data from
+        # every cell and the OCR job combined — a per-cell floor would fail
+        # on whichever platform happens to skip the most tests.
+        env:
+          COVERAGE_FILE: .coverage.${{ matrix.os }}-${{ matrix.python }}
+        run: pytest -q -m "not slow" --cov --cov-report= --cov-fail-under=0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.os }}-${{ matrix.python }}
+          path: .coverage.*
+          include-hidden-files: true       # .coverage.* is a dotfile
+          retention-days: 1
 
 
   ocr-gates:
@@ -50,7 +57,46 @@ jobs:
       - name: Regenerate degraded matrix from committed corpus PDFs
         run: python -c "from pathlib import Path; from bench.degrade import degrade_corpus; degrade_corpus(Path('fixtures/corpus'), Path('fixtures/degraded'))"
       - name: OCR-route gates (degradation tiers, planted fakes)
-        run: pytest -q tests/test_degraded_e2e.py
+        # rapidocr_backend.py reads 35% from the fast suite and 79% from this
+        # one. It was never untested, only unmeasured.
+        env:
+          COVERAGE_FILE: .coverage.ocr-gates
+        run: pytest -q tests/test_degraded_e2e.py --cov --cov-report= --cov-fail-under=0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage-ocr-gates
+          path: .coverage.*
+          include-hidden-files: true
+          retention-days: 1
+
+  coverage:
+    # One floor, over every job's data combined. Two floors really: the engine
+    # that decides the statuses is held higher than the package average, so a
+    # gain in the periphery can never paper over the core rotting.
+    needs: [test, ocr-gates]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -U pip coverage
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: coverage-*
+          path: coverage-data
+          merge-multiple: true
+      - name: Combine every job's coverage
+        run: |
+          coverage combine coverage-data
+          coverage report
+      - name: Core engine floor (align, verify, geometry, intake, outputs, api)
+        run: coverage report --include='paperpin/align/*,paperpin/verify/*,paperpin/geometry/*,paperpin/intake/*,paperpin/outputs/*,paperpin/types.py,paperpin/schemas.py,paperpin/api.py' --fail-under=88
+      - name: Whole-package floor
+        run: coverage report --fail-under=85
+      - name: Coverage summary
+        if: always()
+        run: '{ echo "### Coverage (all jobs combined)"; echo; echo "```"; coverage report; echo "```"; } >> "$GITHUB_STEP_SUMMARY"'
 
   packaging:
     runs-on: ubuntu-latest
