@@ -157,6 +157,7 @@ Mapping-style container: `result["total"]`, `in`, `len`, `iter`,
 | `.meta` | run metadata: `adapter`, `backend`, `ground_seconds`, and for model runs `extract_seconds`, `token_usage`, `pages_truncated` |
 | `.source` | the input path |
 | `.save(path)` | versioned JSON, written atomically |
+| `.to_json(indent=1)` | the same JSON as a string, for piping or POSTing |
 | `GroundResult.from_dict(json)` | rebuild from `save()` output; unknown keys ignored |
 | `.overlay(path, page=None)` | PNG of the page(s) with status-colored boxes |
 | `.viewer(path)` | self-contained interactive HTML viewer |
@@ -194,16 +195,20 @@ Presets shipping today: `invoice`, `receipt`.
 
 ```
 paperpin ground  FILE --extraction JSON [--schema S] [--backend B]
-                 [--no-cache] [-o result.json] [--overlay proof.png]
-                 [--view proof.html]
+                 [--no-cache] [-o result.json|-] [--quiet]
+                 [--overlay proof.png] [--view proof.html]
 paperpin extract FILE [--model M] [--schema S] [--prompt P]
                  [--extraction JSON] [--backend B] [--no-cache]
-                 [-o] [--overlay] [--view]
+                 [-o result.json|-] [--quiet] [--overlay] [--view]
 paperpin overlay FILE result.json [-o proof.png] [--page N]   # N is 0-based
 paperpin view    FILE result.json [-o proof.html]
 paperpin lab     [--port 8377] [--no-browser]
 paperpin version
 ```
+
+`-o -` writes the result JSON to stdout and moves the summary to stderr, so
+`paperpin ground doc.pdf --extraction e.json -o - | jq` pipes cleanly from any
+language; `--quiet` drops the summary entirely.
 
 The CLI loads a local `.env` before running; as a library, export the
 provider variable yourself or pass `api_key=`.

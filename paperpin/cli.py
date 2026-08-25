@@ -28,7 +28,10 @@ def main(argv=None) -> int:
                           help="preset name (invoice, receipt) or JSON schema file")
     p_ground.add_argument("--backend", default="auto")
     p_ground.add_argument("--no-cache", action="store_true")
-    p_ground.add_argument("-o", "--out", default=None, help="output JSON path")
+    p_ground.add_argument("-o", "--out", default=None,
+                          help="output JSON path, or - for stdout")
+    p_ground.add_argument("--quiet", action="store_true",
+                          help="suppress the field summary")
     p_ground.add_argument("--overlay", default=None, help="also render overlay PNG")
     p_ground.add_argument("--view", default=None, help="also render HTML viewer")
 
@@ -45,7 +48,10 @@ def main(argv=None) -> int:
                            help="extra instructions appended to the base prompt")
     p_extract.add_argument("--backend", default="auto")
     p_extract.add_argument("--no-cache", action="store_true")
-    p_extract.add_argument("-o", "--out", default=None)
+    p_extract.add_argument("-o", "--out", default=None,
+                           help="output JSON path, or - for stdout")
+    p_extract.add_argument("--quiet", action="store_true",
+                           help="suppress the field summary")
     p_extract.add_argument("--overlay", default=None)
     p_extract.add_argument("--view", default=None)
 
@@ -85,7 +91,7 @@ def main(argv=None) -> int:
         return 1
 
 
-def _print_summary(result) -> None:
+def _print_summary(result, stream) -> None:
     from .types import Status
     icons = {Status.VERIFIED: "✓", Status.LOW_CONFIDENCE: "~",
              Status.AMBIGUOUS: "?", Status.NOT_FOUND: "✗", Status.NOT_PRESENT: "·"}
@@ -93,30 +99,38 @@ def _print_summary(result) -> None:
         icon = icons.get(f.status, " ")
         loc = f"p{f.page + 1}" if f.page is not None else "--"
         line = f" {icon} {f.name:<24} {str(f.value)[:36]:<38} {f.status.value:<15} {loc}"
-        print(line)
+        print(line, file=stream)
         for note in f.notes:
             if note.startswith("⚠"):
-                print(f"      {note}")
+                print(f"      {note}", file=stream)
     counts = result.counts()
     total_located = counts.get("verified", 0) + counts.get("low_confidence", 0)
     print(f"\n {total_located} located · " +
-          " · ".join(f"{v} {k}" for k, v in sorted(counts.items())))
+          " · ".join(f"{v} {k}" for k, v in sorted(counts.items())), file=stream)
     if counts.get("not_found"):
         print(" ⚠ NOT FOUND fields are values the model asserted that match "
-              "nothing on the document.")
+              "nothing on the document.", file=stream)
 
 
-def _finish(result, out, overlay, view) -> int:
-    if out:
+def _finish(result, out, overlay, view, quiet: bool = False) -> int:
+    # `-o -` makes stdout the result JSON, so every human-facing line moves
+    # to stderr: `paperpin ground … -o - | jq` must receive JSON and nothing
+    # else, while the person watching still sees the summary.
+    piping = out == "-"
+    chatter = sys.stderr if piping else sys.stdout
+    if piping:
+        sys.stdout.write(result.to_json() + "\n")
+    elif out:
         result.save(out)
-        print(f" saved → {out}")
+        print(f" saved → {out}", file=chatter)
     if overlay:
         result.overlay(overlay)
-        print(f" overlay → {overlay}")
+        print(f" overlay → {overlay}", file=chatter)
     if view:
         result.viewer(view)
-        print(f" viewer → {view}")
-    _print_summary(result)
+        print(f" viewer → {view}", file=chatter)
+    if not quiet:
+        _print_summary(result, chatter)
     return 0
 
 
@@ -124,7 +138,7 @@ def _cmd_ground(args) -> int:
     from .api import ground
     result = ground(args.file, extraction=args.extraction, schema=args.schema,
                     backend=args.backend, use_cache=not args.no_cache)
-    return _finish(result, args.out, args.overlay, args.view)
+    return _finish(result, args.out, args.overlay, args.view, args.quiet)
 
 
 def _cmd_extract(args) -> int:
@@ -132,7 +146,7 @@ def _cmd_extract(args) -> int:
     result = extract(args.file, schema=args.schema, model=args.model,
                      prompt=args.prompt, extraction=args.extraction,
                      backend=args.backend, use_cache=not args.no_cache)
-    return _finish(result, args.out, args.overlay, args.view)
+    return _finish(result, args.out, args.overlay, args.view, args.quiet)
 
 
 def _load_result_json(doc_path: str, result_path: str):

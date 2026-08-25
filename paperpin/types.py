@@ -279,14 +279,19 @@ class GroundResult:
             "meta": {k: v for k, v in self.meta.items() if not k.startswith("_")},
         }
 
+    def to_json(self, indent: int = 1) -> str:
+        """The exact text `save()` writes — for callers that pipe or POST the
+        result instead of writing a file. NaN/Infinity leave as null: legal
+        for json.loads, invalid JSON for every other consumer."""
+        payload = _json_safe(self.to_dict())
+        return json.dumps(payload, indent=indent, ensure_ascii=False,
+                          allow_nan=False)
+
     def save(self, path: str) -> None:
         """Write JSON atomically: serialize fully, then replace the target —
         a mid-serialization failure (lone surrogate, absurd nesting) must
-        not truncate a previous good file. NaN/Infinity leave as null: legal
-        for json.loads, invalid JSON for every other consumer."""
-        payload = _json_safe(self.to_dict())
-        text = json.dumps(payload, indent=1, ensure_ascii=False,
-                          allow_nan=False)
+        not truncate a previous good file."""
+        text = self.to_json()
         target = Path(path)
         target.parent.mkdir(parents=True, exist_ok=True)
         tmp = target.with_name(target.name + ".tmp")
