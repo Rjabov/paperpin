@@ -41,15 +41,32 @@ def _cases():
     return {"demo": demo, "line_items": LINE_ITEMS}
 
 
+#: Coordinates round to this many places before comparison. Real drift moves a
+#: box by orders of magnitude more than this; last-bit float differences
+#: between CI platforms move it by orders of magnitude less.
+PLACES = 6
+
+
+def _round(value):
+    if isinstance(value, float):
+        return round(value, PLACES)
+    if isinstance(value, dict):
+        return {k: _round(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [_round(v) for v in value]
+    return value
+
+
 def _canonical(payload: dict) -> dict:
     """Drop what changes without the result changing: the library version, the
-    absolute path the run happened to use, and every timing."""
+    absolute path the run happened to use, every timing, and float noise below
+    what any real change would produce."""
     payload = json.loads(json.dumps(payload))  # never mutate the caller's dict
     payload["paperpin"]["version"] = "<version>"
     payload["source"] = Path(payload["source"]).name
     payload["meta"].pop("ground_seconds", None)
     payload["meta"].pop("profile", None)
-    return payload
+    return _round(payload)
 
 
 @pytest.mark.parametrize("case", sorted(_cases()))
