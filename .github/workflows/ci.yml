@@ -27,8 +27,13 @@ jobs:
         # Windows runners pay a cold-filesystem tax on first import;
         # the regression guard still bites at the higher bound.
         run: python -c "import time, os; t=time.perf_counter(); import paperpin; d=time.perf_counter()-t; budget = 6.0 if os.name == 'nt' else 2.5; print(f'import {d:.2f}s (budget {budget}s)'); assert d < budget"
-      - name: Fast tests (unit + text-layer e2e)
-        run: pytest -q -m "not slow"
+      - name: Fast tests (unit + text-layer e2e) with the coverage floor
+        run: pytest -q -m "not slow" --cov
+      - name: Coverage summary
+        if: always()
+        shell: bash
+        run: '{ echo "### Coverage"; echo; echo "```"; coverage report; echo "```"; } >> "$GITHUB_STEP_SUMMARY"'
+
 
   ocr-gates:
     runs-on: ubuntu-latest

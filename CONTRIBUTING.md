@@ -27,7 +27,24 @@ an evening on it. Small, focused PRs merge fast; drive-by refactors don't.
 pip install -e ".[full,dev]"
 pytest -q                 # fast gate, must stay green
 pytest -q -m slow         # degraded gate: OCR degradation matrix (slower)
+pytest -q --cov           # with the coverage floor CI enforces
 ```
+
+Every test belongs to exactly one layer, so you can run just one:
+
+```bash
+pytest -q -m unit         # deterministic, hand-built input
+pytest -q -m integration  # a real document through the pipeline, or the HTTP stack
+pytest -q -m contract     # result JSON, CLI I/O, goldens, examples
+pytest -q -m e2e          # graded corpus gates
+pytest -q -m security     # each test pins a demonstrated fix
+```
+
+The layers live in one mapping in `tests/conftest.py`; a new test module
+that is not in it fails collection rather than quietly belonging to
+nothing. The coverage floor in `pyproject.toml` ratchets up as gaps close
+— lowering it is something to argue for in a PR, not a fix for a red
+build.
 
 Both gates green = safe to push. The fast gate runs the synthetic corpus
 end-to-end (`fixtures/corpus`), so matcher and schema changes are
