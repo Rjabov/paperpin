@@ -159,6 +159,7 @@ Mapping-style container: `result["total"]`, `in`, `len`, `iter`,
 | `.save(path)` | versioned JSON, written atomically |
 | `.to_json(indent=1)` | the same JSON as a string, for piping or POSTing |
 | `GroundResult.from_dict(json)` | rebuild from `save()` output; unknown keys ignored |
+| `.page_image(page=0, width=None)` | PIL image of the page a bbox is normalized against — multiply a bbox by its `(width, height)` for pixels |
 | `.overlay(path, page=None)` | PNG of the page(s) with status-colored boxes |
 | `.viewer(path)` | self-contained interactive HTML viewer |
 
@@ -202,9 +203,13 @@ paperpin extract FILE [--model M] [--schema S] [--prompt P]
                  [-o result.json|-] [--quiet] [--overlay] [--view]
 paperpin overlay FILE result.json [-o proof.png] [--page N]   # N is 0-based
 paperpin view    FILE result.json [-o proof.html]
+paperpin pages   FILE [-o dir] [--width N] [--page N] [--format png|jpg]
 paperpin lab     [--port 8377] [--no-browser]
 paperpin version
 ```
+
+`paperpin pages` writes the page rasters a viewer needs; boxes are
+normalized, so any `--width` renders them correctly.
 
 `-o -` writes the result JSON to stdout and moves the summary to stderr, so
 `paperpin ground doc.pdf --extraction e.json -o - | jq` pipes cleanly from any

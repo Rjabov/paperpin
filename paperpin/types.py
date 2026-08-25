@@ -298,6 +298,16 @@ class GroundResult:
         tmp.write_text(text, encoding="utf-8", errors="strict")
         tmp.replace(target)
 
+    def page_image(self, page: int = 0, width: Optional[int] = None):
+        """The page raster a bbox is normalized against: multiply a bbox by
+        this image's (width, height) for pixels. `width` scales proportionally
+        — any width works, the boxes are normalized. Returns a PIL Image."""
+        if not 0 <= page < len(self.pages):
+            raise IndexError(
+                f"no page {page} — this result has {len(self.pages)} page(s)")
+        from .outputs.common import fit_width, get_page_images
+        return fit_width(get_page_images(self, [page])[page], width)
+
     def overlay(self, path: str, page: Optional[int] = None) -> None:
         from .outputs.overlay import render_overlay
         render_overlay(self, path, page=page)

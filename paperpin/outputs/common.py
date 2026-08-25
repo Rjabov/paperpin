@@ -27,3 +27,15 @@ def get_page_images(result: GroundResult, pages: Optional[list[int]] = None
             "no page images available — render from the pipeline's result object, "
             "or pass page images explicitly")
     return out
+
+
+def fit_width(image: Image.Image, width: Optional[int] = None) -> Image.Image:
+    """Scale a page raster to a target width, keeping aspect. Boxes are
+    normalized, so any width renders them correctly — this only trades file
+    size against sharpness."""
+    if width is None or width == image.width:
+        return image
+    if width < 1:
+        raise ValueError(f"width must be at least 1 pixel, got {width}")
+    height = max(1, round(image.height * width / image.width))
+    return image.resize((width, height), Image.LANCZOS)

@@ -66,6 +66,17 @@ def main(argv=None) -> int:
     p_view.add_argument("result", help="paperpin result JSON")
     p_view.add_argument("-o", "--out", default="proof.html")
 
+    p_pages = sub.add_parser("pages", help="write page rasters for a viewer")
+    p_pages.add_argument("file", help="the original document")
+    p_pages.add_argument("-o", "--out", default="pages",
+                         help="output directory (created if missing)")
+    p_pages.add_argument("--width", type=int, default=None,
+                         help="scale each page to this pixel width")
+    p_pages.add_argument("--page", type=int, default=None,
+                         help="only this page (0-based)")
+    p_pages.add_argument("--format", default="png", choices=("png", "jpg"),
+                         help="png (lossless) or jpg (small, for scans)")
+
     p_lab = sub.add_parser("lab", help="start the local Lab web app")
     p_lab.add_argument("--port", type=int, default=8377)
     p_lab.add_argument("--no-browser", action="store_true")
@@ -82,7 +93,8 @@ def main(argv=None) -> int:
     load_dotenv()
     commands = {"ground": _cmd_ground, "extract": _cmd_extract,
                 "overlay": _cmd_overlay, "view": _cmd_view,
-                "lab": _cmd_lab, "version": _cmd_version}
+                "pages": _cmd_pages, "lab": _cmd_lab,
+                "version": _cmd_version}
     try:
         return commands[args.command](args)
     except (ValueError, FileNotFoundError, RuntimeError, ImportError,
@@ -176,6 +188,30 @@ def _cmd_view(args) -> int:
     from .outputs.viewer import render_viewer
     render_viewer(result, args.out)
     print(f" viewer → {args.out}")
+    return 0
+
+
+def _cmd_pages(args) -> int:
+    """Page rasters as files — the pixels a JS/HTML viewer draws boxes on.
+    Boxes are normalized, so any --width renders them correctly."""
+    from pathlib import Path
+
+    from .intake.loader import load_document
+    from .outputs.common import fit_width
+
+    doc = load_document(args.file)
+    if args.page is not None and not 0 <= args.page < len(doc.pages):
+        raise IndexError(f"no page {args.page} — {args.file} has "
+                         f"{len(doc.pages)} page(s)")
+    wanted = [args.page] if args.page is not None else range(len(doc.pages))
+
+    out_dir = Path(args.out)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for idx in wanted:
+        image = fit_width(doc.pages[idx].raster(), args.width)
+        path = out_dir / f"page-{idx}.{args.format}"
+        image.convert("RGB").save(path)
+        print(f" page {idx} → {path}  ({image.width}x{image.height})")
     return 0
 
 
