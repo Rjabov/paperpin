@@ -94,5 +94,13 @@ include = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 markers = [
+    # layers, applied by tests/conftest.py from one mapping — every test has
+    # exactly one, so `pytest -m unit` means something
+    "unit: deterministic, hand-built input, no document read from disk",
+    "integration: a real document through the pipeline, or the HTTP stack",
+    "contract: the published surface — result JSON, CLI I/O, goldens, examples",
+    "e2e: graded corpus gates — located rate, IoU, silent-wrong = 0",
+    "security: pins a fix whose absence was demonstrated",
+    # orthogonal
     "slow: OCR-heavy end-to-end tests (degradation matrix)",
 ]
