@@ -115,7 +115,7 @@ show_missing = true
 # Set from the baseline the day the gate went in. It ratchets UP as gaps
 # close; lowering it is a decision to argue for in a PR, never a quick fix
 # for a red build — same rule as the degraded-tier thresholds.
-fail_under = 78
+fail_under = 80
 exclude_also = [
   "if __name__ == .__main__.:",
 ]
