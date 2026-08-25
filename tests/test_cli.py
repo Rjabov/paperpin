@@ -4,6 +4,9 @@
 only works if stdout carries the result JSON and absolutely nothing else.
 """
 import json
+import os
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -55,6 +58,22 @@ def test_file_output_still_reports_on_stdout(capsys, tmp_path):
     assert f"saved → {out}" in captured.out
     assert "located" in captured.out
     assert json.loads(out.read_text("utf-8"))["fields"]["approved_by"]["status"] == "not_found"
+
+
+def test_piped_json_is_utf8_even_on_a_legacy_console():
+    """JSON is UTF-8 by definition. A Windows console hands Python a cp1252
+    stdout, and writing through it produced bytes no JSON.parse would accept
+    — the one failure mode that only shows up in another language."""
+    env = {**os.environ, "PYTHONIOENCODING": "cp1252"}
+    proc = subprocess.run(
+        [sys.executable, "-m", "paperpin", "ground",
+         str(DEMO / "demo_invoice.pdf"),
+         "--extraction", str(DEMO / "demo_extraction.json"), "-o", "-", "--quiet"],
+        capture_output=True, env=env)  # bytes: no decoding on our side
+
+    assert proc.returncode == 0, proc.stderr.decode("utf-8", "replace")
+    payload = json.loads(proc.stdout.decode("utf-8"))  # strict: raises on bad bytes
+    assert payload["fields"]["approved_by"]["value"] == "M. Sedláčková"
 
 
 def test_to_json_matches_what_save_writes(tmp_path):

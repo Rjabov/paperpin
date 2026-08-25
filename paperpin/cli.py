@@ -131,7 +131,17 @@ def _finish(result, out, overlay, view, quiet: bool = False) -> int:
     piping = out == "-"
     chatter = sys.stderr if piping else sys.stdout
     if piping:
-        sys.stdout.write(result.to_json() + "\n")
+        # JSON is UTF-8 by definition (RFC 8259), but a Windows console hands
+        # us a cp1252 stdout — piping through it emits bytes no JSON.parse
+        # will accept. Write the encoded bytes underneath the text layer.
+        payload = (result.to_json() + "\n").encode("utf-8")
+        buffer = getattr(sys.stdout, "buffer", None)
+        if buffer is None:
+            sys.stdout.write(payload.decode("utf-8"))
+        else:
+            sys.stdout.flush()
+            buffer.write(payload)
+            buffer.flush()
     elif out:
         result.save(out)
         print(f" saved → {out}", file=chatter)
