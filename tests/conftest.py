@@ -22,6 +22,7 @@ if str(ROOT) not in sys.path:
 #:   contract     the published surface: result JSON, CLI I/O, goldens, examples
 #:   e2e          graded corpus gates — located rate, IoU, silent-wrong = 0
 #:   security     each test pins a fix whose absence was demonstrated
+#:   perf         scaling and work-volume gates — no absolute-speed assertions
 #:
 #: `slow` is orthogonal and stays declared in the module that needs it.
 LAYERS = {
@@ -41,6 +42,7 @@ LAYERS = {
     ],
     "e2e": ["test_corpus_e2e", "test_degraded_e2e"],
     "security": ["test_security"],
+    "perf": ["test_performance"],
 }
 
 _LAYER_OF = {module: layer

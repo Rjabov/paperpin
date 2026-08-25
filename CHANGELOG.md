@@ -18,6 +18,12 @@ All notable changes to paperpin are documented here. The format follows
   version of the payload shape.
 - `fixtures/golden/`: committed samples of exactly what the engine emits,
   asserted bbox-for-bbox on every run.
+- Test layers (`unit` / `integration` / `contract` / `e2e` / `security` /
+  `perf`), applied from one mapping and enforced at collection, so a
+  single layer can be run on its own.
+- A coverage floor CI enforces, property-based tests for the laws that
+  must hold on every input, and performance gates on line-item matching
+  and pipeline work volume.
 
 ### Fixed
 

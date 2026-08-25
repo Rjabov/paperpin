@@ -102,6 +102,7 @@ markers = [
     "contract: the published surface — result JSON, CLI I/O, goldens, examples",
     "e2e: graded corpus gates — located rate, IoU, silent-wrong = 0",
     "security: pins a fix whose absence was demonstrated",
+    "perf: scaling and work-volume gates",
     # orthogonal
     "slow: OCR-heavy end-to-end tests (degradation matrix)",
 ]
