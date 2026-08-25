@@ -72,7 +72,7 @@ images use pixels; normalization makes outputs uniform.
 ## Performance posture (CPU magic)
 
 Default install runs on a CPU-only laptop. RapidOCR (bundled ONNX PP-OCR
-models) is the default backend; tesseract is a clearly-labeled fallback; heavy
-GPU backends can only ever be optional extras. OCR results are cached by file
+models) is the only backend; heavy GPU backends can only ever be optional
+extras. OCR results are cached by file
 hash, so re-running with a new prompt/schema never re-OCRs. Lazy imports keep
 `import paperpin` fast; CI asserts the import-time budget.

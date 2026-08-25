@@ -33,7 +33,4 @@ def get_backend(name: str) -> OcrBackend:
     if name in ("auto", "rapidocr"):
         from .rapidocr_backend import RapidOcrBackend
         return RapidOcrBackend()
-    if name == "tesseract":
-        from .tesseract_backend import TesseractBackend
-        return TesseractBackend()
-    raise ValueError(f"unknown OCR backend: {name!r} (available: rapidocr, tesseract)")
+    raise ValueError(f"unknown OCR backend: {name!r} (available: auto, rapidocr)")

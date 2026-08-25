@@ -25,6 +25,13 @@ All notable changes to paperpin are documented here. The format follows
   must hold on every input, and performance gates on line-item matching
   and pipeline work volume.
 
+### Removed
+
+- The Tesseract backend. `backend="tesseract"` was reachable but never
+  documented, never installed by any extra, and never executed by a
+  single test — a public option onto an unproven path. `"auto"` and
+  `"rapidocr"` are the supported values, as the README always said.
+
 ### Fixed
 
 - `-o -` emitted the console codepage instead of UTF-8 on Windows,

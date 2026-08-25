@@ -45,3 +45,17 @@ def test_engine_state_is_a_single_atomic_pair():
     import paperpin.backends.rapidocr_backend as rb
     engine, style = rb._load_engine()
     assert engine is not None and style in ("classic", "v2")
+
+
+def test_unknown_backend_names_are_refused_by_name():
+    """`backend="tesseract"` used to construct a backend no test ever ran.
+    Removing it has to be a clear error, not an AttributeError later on."""
+    import pytest
+
+    from paperpin.backends.base import get_backend
+
+    for name in ("tesseract", "paddle", ""):
+        with pytest.raises(ValueError, match="unknown OCR backend"):
+            get_backend(name)
+
+    assert get_backend("auto").name == get_backend("rapidocr").name == "rapidocr"
