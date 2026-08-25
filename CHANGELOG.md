@@ -16,6 +16,13 @@ All notable changes to paperpin are documented here. The format follows
 - [`docs/result.schema.json`](docs/result.schema.json): the result JSON
   described as JSON Schema, with `paperpin.schema` now carrying the
   version of the payload shape.
+- `fixtures/golden/`: committed samples of exactly what the engine emits,
+  asserted bbox-for-bbox on every run.
+
+### Fixed
+
+- `-o -` emitted the console codepage instead of UTF-8 on Windows,
+  producing bytes no JSON parser outside Python would accept.
 
 ## [0.1.0] - 2026-08-21
 

@@ -1,0 +1,256 @@
+{
+ "paperpin": {
+  "version": "<version>",
+  "schema": 1,
+  "coordinate_space": "normalized 0..1, origin top-left, upright original page"
+ },
+ "source": "demo_invoice.pdf",
+ "pages": [
+  {
+   "index": 0,
+   "width": 595.2756,
+   "height": 841.8898,
+   "route": "textlayer",
+   "dpi": null,
+   "px_width": null,
+   "px_height": null
+  }
+ ],
+ "fields": {
+  "line_items[0].description": {
+   "name": "line_items[0].description",
+   "value": "Offset paper A3 100 g/m², natural white, 250-sheet ream",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.11087301411312675,
+    0.41104186433901446,
+    0.4806445982331545,
+    0.4214945387864303
+   ],
+   "evidence": "Offset paper A3 100 g/m², natural white, 250-sheet ream",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": null,
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.11087301411312675,
+      0.41104186433901446,
+      0.4806445982331545,
+      0.4214945387864303
+     ],
+     "score": 1.0,
+     "evidence": "Offset paper A3 100 g/m², natural white, 250-sheet ream",
+     "exact": true,
+     "fused": false,
+     "anchor": null,
+     "anchor_score": 0.0,
+     "notes": []
+    }
+   ],
+   "notes": []
+  },
+  "line_items[0].qty": {
+   "name": "line_items[0].qty",
+   "value": "6",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.583101171961357,
+    0.41104186433901446,
+    0.5913228095356168,
+    0.4214945387864303
+   ],
+   "evidence": "6",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": null,
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.583101171961357,
+      0.41104186433901446,
+      0.5913228095356168,
+      0.4214945387864303
+     ],
+     "score": 1.0,
+     "evidence": "6",
+     "exact": true,
+     "fused": false,
+     "anchor": null,
+     "anchor_score": 0.0,
+     "notes": []
+    }
+   ],
+   "notes": []
+  },
+  "line_items[0].unit_price": {
+   "name": "line_items[0].unit_price",
+   "value": "18.40",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.7088792149384251,
+    0.41104186433901446,
+    0.7458729747364078,
+    0.4214945387864303
+   ],
+   "evidence": "18.40",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": null,
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.7088792149384251,
+      0.41104186433901446,
+      0.7458729747364078,
+      0.4214945387864303
+     ],
+     "score": 1.0,
+     "evidence": "18.40",
+     "exact": true,
+     "fused": false,
+     "anchor": null,
+     "anchor_score": 0.0,
+     "notes": []
+    }
+   ],
+   "notes": []
+  },
+  "line_items[1].description": {
+   "name": "line_items[1].description",
+   "value": "Kraft envelopes C4 self-seal, 90 g/m² ribbed, box of 250",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.11087301411312675,
+    0.43075940931936696,
+    0.4765446087828898,
+    0.4412120837667828
+   ],
+   "evidence": "Kraft envelopes C4 self-seal, 90 g/m² ribbed, box of 250",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": null,
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.11087301411312675,
+      0.43075940931936696,
+      0.4765446087828898,
+      0.4412120837667828
+     ],
+     "score": 1.0,
+     "evidence": "Kraft envelopes C4 self-seal, 90 g/m² ribbed, box of 250",
+     "exact": true,
+     "fused": false,
+     "anchor": null,
+     "anchor_score": 0.0,
+     "notes": []
+    }
+   ],
+   "notes": []
+  },
+  "line_items[1].qty": {
+   "name": "line_items[1].qty",
+   "value": "10",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.5748794339966227,
+    0.43075940931936696,
+    0.5913227091451422,
+    0.4412120837667828
+   ],
+   "evidence": "10",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": null,
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.5748794339966227,
+      0.43075940931936696,
+      0.5913227091451422,
+      0.4412120837667828
+     ],
+     "score": 1.0,
+     "evidence": "10",
+     "exact": true,
+     "fused": false,
+     "anchor": null,
+     "anchor_score": 0.0,
+     "notes": []
+    }
+   ],
+   "notes": []
+  },
+  "line_items[1].unit_price": {
+   "name": "line_items[1].unit_price",
+   "value": "31.25",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.7088792149384251,
+    0.43075940931936696,
+    0.7458729747364078,
+    0.4412120837667828
+   ],
+   "evidence": "31.25",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": null,
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.7088792149384251,
+      0.43075940931936696,
+      0.7458729747364078,
+      0.4412120837667828
+     ],
+     "score": 1.0,
+     "evidence": "31.25",
+     "exact": true,
+     "fused": false,
+     "anchor": null,
+     "anchor_score": 0.0,
+     "notes": []
+    }
+   ],
+   "notes": []
+  }
+ },
+ "summary": {
+  "verified": 6
+ },
+ "meta": {
+  "adapter": "byo",
+  "backend": "textlayer"
+ }
+}

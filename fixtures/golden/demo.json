@@ -1,0 +1,859 @@
+{
+ "paperpin": {
+  "version": "<version>",
+  "schema": 1,
+  "coordinate_space": "normalized 0..1, origin top-left, upright original page"
+ },
+ "source": "demo_invoice.pdf",
+ "pages": [
+  {
+   "index": 0,
+   "width": 595.2756,
+   "height": 841.8898,
+   "route": "textlayer",
+   "dpi": null,
+   "px_width": null,
+   "px_height": null
+  }
+ ],
+ "fields": {
+  "supplier_name": {
+   "name": "supplier_name",
+   "value": "Havel & Kraus Paper s.r.o.",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.07727513104854289,
+    0.2511258745740832,
+    0.2744684488327759,
+    0.2625287921530823
+   ],
+   "evidence": "Havel & Kraus Paper s.r.o",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": "supplier",
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.07727513104854289,
+      0.2511258745740832,
+      0.2744684488327759,
+      0.2625287921530823
+     ],
+     "score": 1.0,
+     "evidence": "Havel & Kraus Paper s.r.o",
+     "exact": true,
+     "fused": false,
+     "anchor": "supplier",
+     "anchor_score": 0.25,
+     "notes": []
+    }
+   ],
+   "notes": []
+  },
+  "supplier_vat_id": {
+   "name": "supplier_vat_id",
+   "value": "CZ48321099",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.16821186811621372,
+    0.3166302445759529,
+    0.24980550319885436,
+    0.32660779745757706
+   ],
+   "evidence": "CZ48321099",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": null,
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.16821186811621372,
+      0.3166302445759529,
+      0.24980550319885436,
+      0.32660779745757706
+     ],
+     "score": 1.0,
+     "evidence": "CZ48321099",
+     "exact": true,
+     "fused": false,
+     "anchor": null,
+     "anchor_score": 0.0,
+     "notes": []
+    }
+   ],
+   "notes": [
+    "matches the CZ VAT format (format check only)"
+   ]
+  },
+  "supplier_reg_no": {
+   "name": "supplier_reg_no",
+   "value": "48321099",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.17920861026388446,
+    0.3040395230824748,
+    0.2419920244673223,
+    0.3140170759640989
+   ],
+   "evidence": "48321099",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": null,
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.17920861026388446,
+      0.3040395230824748,
+      0.2419920244673223,
+      0.3140170759640989
+     ],
+     "score": 1.0,
+     "evidence": "48321099",
+     "exact": true,
+     "fused": false,
+     "anchor": null,
+     "anchor_score": 0.0,
+     "notes": []
+    },
+    {
+     "page": 0,
+     "bbox": [
+      0.18702208899541656,
+      0.3166302445759529,
+      0.24980550319885436,
+      0.32660779745757706
+     ],
+     "score": 1.0,
+     "evidence": "48321099",
+     "exact": true,
+     "fused": false,
+     "anchor": null,
+     "anchor_score": 0.0,
+     "notes": []
+    }
+   ],
+   "notes": [
+    "value appears 2× on the document — strongest instance pinned, all instances listed"
+   ]
+  },
+  "customer_name": {
+   "name": "customer_name",
+   "value": "Bramwell Studio Ltd",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.5,
+    0.2511258745740832,
+    0.6558994208396917,
+    0.2625287921530823
+   ],
+   "evidence": "Bramwell Studio Ltd",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": "customer",
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.5,
+      0.2511258745740832,
+      0.6558994208396917,
+      0.2625287921530823
+     ],
+     "score": 1.0,
+     "evidence": "Bramwell Studio Ltd",
+     "exact": true,
+     "fused": false,
+     "anchor": "customer",
+     "anchor_score": 0.25,
+     "notes": []
+    }
+   ],
+   "notes": []
+  },
+  "customer_vat_no": {
+   "name": "customer_vat_no",
+   "value": "GB 428 9017 55",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.5611642220846949,
+    0.3166302445759529,
+    0.6639451920421398,
+    0.32660779745757706
+   ],
+   "evidence": "GB 428 9017 55",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": null,
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.5611642220846949,
+      0.3166302445759529,
+      0.6639451920421398,
+      0.32660779745757706
+     ],
+     "score": 1.0,
+     "evidence": "GB 428 9017 55",
+     "exact": true,
+     "fused": false,
+     "anchor": null,
+     "anchor_score": 0.0,
+     "notes": []
+    }
+   ],
+   "notes": []
+  },
+  "invoice_number": {
+   "name": "invoice_number",
+   "value": "2026-0847",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.8223044880388176,
+    0.12606235994307097,
+    0.922724910948811,
+    0.14090990887405933
+   ],
+   "evidence": "2026-0847",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": "invoice",
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.8223044880388176,
+      0.12606235994307097,
+      0.922724910948811,
+      0.14090990887405933
+     ],
+     "score": 1.0,
+     "evidence": "2026-0847",
+     "exact": true,
+     "fused": false,
+     "anchor": "invoice",
+     "anchor_score": 0.35,
+     "notes": []
+    },
+    {
+     "page": 0,
+     "bbox": [
+      0.07727513104854289,
+      0.19905006864318825,
+      0.1475327612285805,
+      0.21021542543929145
+     ],
+     "score": 1.0,
+     "evidence": "20260847",
+     "exact": true,
+     "fused": false,
+     "anchor": null,
+     "anchor_score": 0.0,
+     "notes": []
+    },
+    {
+     "page": 0,
+     "bbox": [
+      0.8029894052435543,
+      0.7148133197480241,
+      0.870257349032952,
+      0.7255035549783356
+     ],
+     "score": 1.0,
+     "evidence": "20260847",
+     "exact": true,
+     "fused": false,
+     "anchor": null,
+     "anchor_score": 0.0,
+     "notes": []
+    }
+   ],
+   "notes": []
+  },
+  "variable_symbol": {
+   "name": "variable_symbol",
+   "value": "20260847",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.07727513104854289,
+    0.19905006864318825,
+    0.1475327612285805,
+    0.21021542543929145
+   ],
+   "evidence": "20260847",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": "variablesymbol",
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.07727513104854289,
+      0.19905006864318825,
+      0.1475327612285805,
+      0.21021542543929145
+     ],
+     "score": 1.0,
+     "evidence": "20260847",
+     "exact": true,
+     "fused": false,
+     "anchor": "variablesymbol",
+     "anchor_score": 0.25,
+     "notes": []
+    },
+    {
+     "page": 0,
+     "bbox": [
+      0.8029894052435543,
+      0.7148133197480241,
+      0.870257349032952,
+      0.7255035549783356
+     ],
+     "score": 1.0,
+     "evidence": "20260847",
+     "exact": true,
+     "fused": false,
+     "anchor": "variablesymbol",
+     "anchor_score": 0.25,
+     "notes": []
+    }
+   ],
+   "notes": [
+    "value appears 2× on the document — strongest instance pinned, all instances listed"
+   ]
+  },
+  "issue_date": {
+   "name": "issue_date",
+   "value": "04.08.2026",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.07727513104854289,
+    0.1705427746956906,
+    0.156307254253324,
+    0.18170813149179382
+   ],
+   "evidence": "04.08.2026",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": null,
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.07727513104854289,
+      0.1705427746956906,
+      0.156307254253324,
+      0.18170813149179382
+     ],
+     "score": 1.0,
+     "evidence": "04.08.2026",
+     "exact": true,
+     "fused": false,
+     "anchor": null,
+     "anchor_score": 0.0,
+     "notes": []
+    }
+   ],
+   "notes": []
+  },
+  "taxable_supply_date": {
+   "name": "taxable_supply_date",
+   "value": "01.08.2026",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.35909165435304247,
+    0.1705427746956906,
+    0.43812377755782356,
+    0.18170813149179382
+   ],
+   "evidence": "01.08.2026",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": null,
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.35909165435304247,
+      0.1705427746956906,
+      0.43812377755782356,
+      0.18170813149179382
+     ],
+     "score": 1.0,
+     "evidence": "01.08.2026",
+     "exact": true,
+     "fused": false,
+     "anchor": null,
+     "anchor_score": 0.0,
+     "notes": []
+    }
+   ],
+   "notes": []
+  },
+  "due_date": {
+   "name": "due_date",
+   "value": "18.08.2026",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.6409083456469574,
+    0.1705427746956906,
+    0.7199404688517386,
+    0.18170813149179382
+   ],
+   "evidence": "18.08.2026",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": "due",
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.6409083456469574,
+      0.1705427746956906,
+      0.7199404688517386,
+      0.18170813149179382
+     ],
+     "score": 1.0,
+     "evidence": "18.08.2026",
+     "exact": true,
+     "fused": false,
+     "anchor": "due",
+     "anchor_score": 0.25,
+     "notes": []
+    }
+   ],
+   "notes": []
+  },
+  "payment_method": {
+   "name": "payment_method",
+   "value": "bank transfer",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.6409083456469574,
+    0.19905006864318825,
+    0.7330713685560101,
+    0.21021542543929145
+   ],
+   "evidence": "bank transfer",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": null,
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.6409083456469574,
+      0.19905006864318825,
+      0.7330713685560101,
+      0.21021542543929145
+     ],
+     "score": 1.0,
+     "evidence": "bank transfer",
+     "exact": true,
+     "fused": false,
+     "anchor": null,
+     "anchor_score": 0.0,
+     "notes": []
+    }
+   ],
+   "notes": []
+  },
+  "order_ref": {
+   "name": "order_ref",
+   "value": "PO-1193",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.35909165435304247,
+    0.19905006864318825,
+    0.4222942235159647,
+    0.21021542543929145
+   ],
+   "evidence": "PO-1193",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": null,
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.35909165435304247,
+      0.19905006864318825,
+      0.4222942235159647,
+      0.21021542543929145
+     ],
+     "score": 1.0,
+     "evidence": "PO-1193",
+     "exact": true,
+     "fused": false,
+     "anchor": null,
+     "anchor_score": 0.0,
+     "notes": []
+    }
+   ],
+   "notes": []
+  },
+  "bank": {
+   "name": "bank",
+   "value": "Vltava Bank a.s., Praha",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.09743386088729321,
+    0.7148133197480241,
+    0.2554308511889282,
+    0.7255035549783356
+   ],
+   "evidence": "Vltava Bank a.s., Praha",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": null,
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.09743386088729321,
+      0.7148133197480241,
+      0.2554308511889282,
+      0.7255035549783356
+     ],
+     "score": 1.0,
+     "evidence": "Vltava Bank a.s., Praha",
+     "exact": true,
+     "fused": false,
+     "anchor": null,
+     "anchor_score": 0.0,
+     "notes": []
+    }
+   ],
+   "notes": []
+  },
+  "iban": {
+   "name": "iban",
+   "value": "CZ23 2222 0000 0047 1823 0267",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.34941798387167217,
+    0.7148133197480241,
+    0.5755614132344749,
+    0.7255035549783356
+   ],
+   "evidence": "CZ23 2222 0000 0047 1823 0267",
+   "method": "textlayer",
+   "proof": "checksum",
+   "anchor": "bankas",
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.34941798387167217,
+      0.7148133197480241,
+      0.5755614132344749,
+      0.7255035549783356
+     ],
+     "score": 1.0,
+     "evidence": "CZ23 2222 0000 0047 1823 0267",
+     "exact": true,
+     "fused": false,
+     "anchor": "bankas",
+     "anchor_score": 0.35,
+     "notes": []
+    }
+   ],
+   "notes": [
+    "IBAN mod-97 checksum passed"
+   ]
+  },
+  "swift": {
+   "name": "swift",
+   "value": "VLTBCZPP",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.651798931452927,
+    0.7148133197480241,
+    0.7299336950817402,
+    0.7255035549783356
+   ],
+   "evidence": "VLTBCZPP",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": "swift",
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.651798931452927,
+      0.7148133197480241,
+      0.7299336950817402,
+      0.7255035549783356
+     ],
+     "score": 1.0,
+     "evidence": "VLTBCZPP",
+     "exact": true,
+     "fused": false,
+     "anchor": "swift",
+     "anchor_score": 0.25,
+     "notes": []
+    }
+   ],
+   "notes": []
+  },
+  "currency": {
+   "name": "currency",
+   "value": "EUR",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.9003799093058744,
+    0.3611230709292356,
+    0.9227247990678603,
+    0.3686062355904537
+   ],
+   "evidence": "EUR",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": null,
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.9003799093058744,
+      0.3611230709292356,
+      0.9227247990678603,
+      0.3686062355904537
+     ],
+     "score": 1.0,
+     "evidence": "EUR",
+     "exact": true,
+     "fused": false,
+     "anchor": null,
+     "anchor_score": 0.0,
+     "notes": []
+    },
+    {
+     "page": 0,
+     "bbox": [
+      0.8801631002513793,
+      0.6460767079016754,
+      0.9227247950361144,
+      0.6603303548754242
+     ],
+     "score": 1.0,
+     "evidence": "EUR",
+     "exact": true,
+     "fused": false,
+     "anchor": null,
+     "anchor_score": 0.0,
+     "notes": []
+    }
+   ],
+   "notes": [
+    "value appears 2× on the document — strongest instance pinned, all instances listed"
+   ]
+  },
+  "total_excl_vat": {
+   "name": "total_excl_vat",
+   "value": "2 038.40",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.862565003504259,
+    0.6095051070104425,
+    0.9227248954265888,
+    0.6204329030236498
+   ],
+   "evidence": "2 038.40",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": "total",
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.862565003504259,
+      0.6095051070104425,
+      0.9227248954265888,
+      0.6204329030236498
+     ],
+     "score": 1.0,
+     "evidence": "2 038.40",
+     "exact": true,
+     "fused": false,
+     "anchor": "total",
+     "anchor_score": 0.35,
+     "notes": []
+    }
+   ],
+   "notes": []
+  },
+  "vat_total": {
+   "name": "vat_total",
+   "value": "386.14",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.8754541593843254,
+    0.6267282637703889,
+    0.9227248020916695,
+    0.6376560597835963
+   ],
+   "evidence": "386.14",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": "total",
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.8754541593843254,
+      0.6267282637703889,
+      0.9227248020916695,
+      0.6376560597835963
+     ],
+     "score": 1.0,
+     "evidence": "386.14",
+     "exact": true,
+     "fused": false,
+     "anchor": "total",
+     "anchor_score": 0.35,
+     "notes": []
+    }
+   ],
+   "notes": []
+  },
+  "total_due": {
+   "name": "total_due",
+   "value": "2 424.54",
+   "status": "verified",
+   "confidence": 1.0,
+   "page": 0,
+   "bbox": [
+    0.7960929357763026,
+    0.6460767079016754,
+    0.8745623600228196,
+    0.6603303548754242
+   ],
+   "evidence": "2 424.54",
+   "method": "textlayer",
+   "proof": null,
+   "anchor": "total",
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [
+    {
+     "page": 0,
+     "bbox": [
+      0.7960929357763026,
+      0.6460767079016754,
+      0.8745623600228196,
+      0.6603303548754242
+     ],
+     "score": 1.0,
+     "evidence": "2 424.54",
+     "exact": true,
+     "fused": false,
+     "anchor": "total",
+     "anchor_score": 0.35,
+     "notes": []
+    }
+   ],
+   "notes": []
+  },
+  "approved_by": {
+   "name": "approved_by",
+   "value": "M. Sedláčková",
+   "status": "not_found",
+   "confidence": 0.0,
+   "page": null,
+   "bbox": null,
+   "evidence": null,
+   "method": null,
+   "proof": null,
+   "anchor": null,
+   "quote": null,
+   "repaired_value": null,
+   "candidates": [],
+   "notes": [
+    "value matches nothing on the document — possible hallucination"
+   ]
+  }
+ },
+ "summary": {
+  "verified": 19,
+  "not_found": 1
+ },
+ "meta": {
+  "adapter": "byo",
+  "backend": "textlayer"
+ }
+}

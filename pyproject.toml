@@ -82,6 +82,7 @@ include = [
   "tests",
   "fixtures/corpus",
   "fixtures/demo",
+  "fixtures/golden",
   "bench",
   "examples",
   "README.md",

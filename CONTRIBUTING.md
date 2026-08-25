@@ -33,6 +33,15 @@ Both gates green = safe to push. The fast gate runs the synthetic corpus
 end-to-end (`fixtures/corpus`), so matcher and schema changes are
 exercised on every run.
 
+`fixtures/golden/` holds committed samples of exactly what the engine
+emits, down to every bbox, so an accidental drift shows up as a diff. When
+a change moves them on purpose:
+
+```bash
+PAPERPIN_UPDATE_GOLDEN=1 pytest tests/test_golden_result.py
+git diff fixtures/golden      # read this before committing it
+```
+
 For the Lab frontend:
 
 ```bash
