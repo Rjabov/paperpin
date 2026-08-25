@@ -46,7 +46,7 @@ full = [
     "pillow-heif>=0.13",
 ]
 lab = ["fastapi>=0.110", "uvicorn>=0.29", "python-multipart>=0.0.9"]
-dev = ["pytest>=8.0", "reportlab>=4.0", "httpx>=0.27"]
+dev = ["pytest>=8.0", "reportlab>=4.0", "httpx>=0.27", "jsonschema>=4.20"]
 
 [project.scripts]
 paperpin = "paperpin.cli:main"
@@ -78,6 +78,7 @@ packages = ["paperpin"]
 # the whole lab/web node tree in the public tarball
 include = [
   "paperpin",
+  "docs/result.schema.json",
   "tests",
   "fixtures/corpus",
   "fixtures/demo",

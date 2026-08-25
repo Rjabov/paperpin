@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Rjabov/paperpin/blob/main/docs/result.schema.json",
+  "title": "paperpin result",
+  "description": "What paperpin.save() / `paperpin ground -o` writes, and what any consumer in any language can rely on. `paperpin.schema` is the version of THIS shape; it moves only when the payload changes, unlike `paperpin.version`.",
+  "type": "object",
+  "required": ["paperpin", "source", "pages", "fields", "summary", "meta"],
+  "additionalProperties": false,
+  "properties": {
+    "paperpin": {
+      "type": "object",
+      "required": ["version", "schema", "coordinate_space"],
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "the paperpin library release that produced this file"
+        },
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "version of this payload's shape — branch on this, not on `version`"
+        },
+        "coordinate_space": {
+          "type": "string",
+          "description": "human-readable statement of what every bbox is relative to"
+        }
+      }
+    },
+    "source": {
+      "type": "string",
+      "description": "the document this result was produced from, as it was passed in"
+    },
+    "pages": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/page" }
+    },
+    "fields": {
+      "type": "object",
+      "description": "every value that was asserted, keyed by field name. Table rows are flattened to `name[i].column`.",
+      "additionalProperties": { "$ref": "#/$defs/field" }
+    },
+    "summary": {
+      "type": "object",
+      "description": "field count per status; a status absent from the run is absent here",
+      "additionalProperties": { "type": "integer", "minimum": 0 },
+      "propertyNames": { "$ref": "#/$defs/status" }
+    },
+    "meta": {
+      "type": "object",
+      "description": "run metadata. Keys vary by run — model runs add `extract_seconds`, `token_usage` and `pages_truncated`; OCR runs add `ocr`. Consumers must tolerate keys they do not know.",
+      "properties": {
+        "adapter": { "type": "string" },
+        "backend": { "type": "string" },
+        "ground_seconds": { "type": "number", "minimum": 0 },
+        "extract_seconds": { "type": "number", "minimum": 0 },
+        "pages_truncated": { "type": "integer", "minimum": 1 }
+      }
+    }
+  },
+  "$defs": {
+    "status": {
+      "enum": ["verified", "low_confidence", "ambiguous", "not_found", "not_present"],
+      "description": "verified: located, every check agreed. low_confidence: located with doubt. ambiguous: several equally plausible locations, all in `candidates`. not_found: asserted but matches nothing on the page — the hallucination flag. not_present: the model itself said the field is not on the document."
+    },
+    "bbox": {
+      "type": "array",
+      "description": "(x0, y0, x1, y1) normalized 0..1, origin top-left, on the upright original page. Multiply by the page raster's pixel size to draw it.",
+      "items": { "type": "number", "minimum": 0, "maximum": 1 },
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "page": {
+      "type": "object",
+      "required": ["index", "width", "height", "route"],
+      "additionalProperties": false,
+      "properties": {
+        "index": { "type": "integer", "minimum": 0, "description": "0-based" },
+        "width": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "original-space width: pixels for images, points for PDF pages"
+        },
+        "height": { "type": "number", "exclusiveMinimum": 0 },
+        "route": {
+          "enum": ["textlayer", "ocr"],
+          "description": "how this page's geometry was obtained"
+        },
+        "dpi": {
+          "type": ["number", "null"],
+          "description": "render resolution, present only when a raster was actually produced"
+        },
+        "px_width": { "type": ["integer", "null"] },
+        "px_height": { "type": ["integer", "null"] }
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "required": ["page", "bbox", "score", "evidence"],
+      "additionalProperties": false,
+      "properties": {
+        "page": { "type": "integer", "minimum": 0 },
+        "bbox": { "$ref": "#/$defs/bbox" },
+        "score": { "type": "number" },
+        "evidence": { "type": "string" },
+        "exact": { "type": "boolean", "description": "false for a fuzzy or partial match" },
+        "fused": { "type": "boolean", "description": "evidence glued from separate printed runs" },
+        "anchor": { "type": ["string", "null"] },
+        "anchor_score": { "type": "number" },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "field": {
+      "type": "object",
+      "required": ["name", "value", "status", "confidence", "page", "bbox",
+                   "evidence", "candidates", "notes"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "value": { "description": "the asserted value, exactly as it came in — any JSON type" },
+        "status": { "$ref": "#/$defs/status" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "page": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "description": "0-based; null when the field was not located"
+        },
+        "bbox": {
+          "oneOf": [{ "$ref": "#/$defs/bbox" }, { "type": "null" }],
+          "description": "null for not_found and not_present"
+        },
+        "evidence": {
+          "type": ["string", "null"],
+          "description": "the exact document text that matched"
+        },
+        "method": {
+          "enum": ["textlayer", "ocr", null],
+          "description": "how the matched text was located"
+        },
+        "proof": {
+          "enum": ["checksum", "arithmetic", null],
+          "description": "set when a verification check positively proved the value"
+        },
+        "anchor": { "type": ["string", "null"], "description": "label text found near the value" },
+        "quote": { "type": ["string", "null"], "description": "source quote the model supplied, if any" },
+        "repaired_value": {
+          "type": ["string", "null"],
+          "description": "checksum-driven repair of an OCR-confusable value"
+        },
+        "candidates": {
+          "type": "array",
+          "description": "for ambiguous: every tied location. Otherwise the location that won, or empty.",
+          "items": { "$ref": "#/$defs/candidate" }
+        },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

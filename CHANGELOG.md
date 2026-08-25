@@ -4,6 +4,19 @@ All notable changes to paperpin are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- `-o -` writes the result JSON to stdout (summary moves to stderr) and
+  `--quiet` drops the summary, so other languages can pipe paperpin
+  without a temp file.
+- `paperpin pages` and `result.page_image()`: the page rasters a viewer
+  draws normalized boxes on.
+- [`docs/result.schema.json`](docs/result.schema.json): the result JSON
+  described as JSON Schema, with `paperpin.schema` now carrying the
+  version of the payload shape.
+
 ## [0.1.0] - 2026-08-21
 
 First public release.
@@ -31,4 +44,5 @@ First public release.
   + `bench/`; synthetic demo invoice in `fixtures/demo` with a guard test
   that keeps the README screenshots honest.
 
+[Unreleased]: https://github.com/Rjabov/paperpin/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/Rjabov/paperpin/releases/tag/v0.1.0

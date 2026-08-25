@@ -228,11 +228,17 @@ provider variable yourself or pass `api_key=`.
 
 ### Output JSON shape
 
+The shape is a contract other languages read, so it is written down as JSON
+Schema in [`docs/result.schema.json`](docs/result.schema.json) and every
+release is validated against it. `paperpin.schema` is the version of the
+*shape* — branch on that, not on `paperpin.version`, which moves every
+release. `meta` keys vary by run: tolerate ones you do not know.
+
 `save()` / `-o` writes:
 
 ```jsonc
 {
-  "paperpin": { "version": "0.1.0",
+  "paperpin": { "version": "0.1.0", "schema": 1,
                 "coordinate_space": "normalized 0..1, origin top-left, upright original page" },
   "source": "invoice.pdf",
   "pages":  [ { "index": 0, "width": 595.3, "height": 841.9, "route": "textlayer" } ],

@@ -17,6 +17,13 @@ from pathlib import Path
 from typing import Any, Optional
 
 
+#: Version of the result JSON's *shape*, described by docs/result.schema.json.
+#: Bump it when the payload changes in a way a consumer must react to; the
+#: library version in the same block moves for every release and says nothing
+#: about the wire format.
+RESULT_SCHEMA = 1
+
+
 class Status(str, Enum):
     """Exactly five statuses. Never collapse them (HANDOVER §4.1).
 
@@ -268,7 +275,11 @@ class GroundResult:
 
     def to_dict(self) -> dict:
         return {
-            "paperpin": {"version": _version(), "coordinate_space":
+            # `version` moves with the library; `schema` moves only when this
+            # payload's shape changes, which is the number another language
+            # can actually branch on (docs/result.schema.json)
+            "paperpin": {"version": _version(), "schema": RESULT_SCHEMA,
+                         "coordinate_space":
                          "normalized 0..1, origin top-left, upright original page"},
             "source": self.source,
             "pages": [p.to_dict() for p in self.pages],
