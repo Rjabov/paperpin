@@ -130,18 +130,23 @@ def lab_home() -> Path:
 
 def connect() -> sqlite3.Connection:
     global _CONN
-    if _CONN is None:
+    if _CONN is not None:
+        return _CONN
+    with _LOCK:
+        if _CONN is not None:       # another thread built it while we waited
+            return _CONN
         db_path = lab_home() / "lab.sqlite"
         # create 0600 before sqlite touches it: the settings table holds the
         # user's API key, and the -wal file inherits the db's mode
         if not db_path.exists():
             os.close(os.open(db_path, os.O_CREAT | os.O_WRONLY, 0o600))
-        _CONN = sqlite3.connect(db_path, check_same_thread=False)
-        _CONN.row_factory = sqlite3.Row
-        _CONN.execute("PRAGMA journal_mode=WAL")
-        _CONN.execute("PRAGMA foreign_keys=ON")
-        _migrate(_CONN)
-    return _CONN
+        conn = sqlite3.connect(db_path, check_same_thread=False)
+        conn.row_factory = sqlite3.Row
+        conn.execute("PRAGMA journal_mode=WAL")
+        conn.execute("PRAGMA foreign_keys=ON")
+        _migrate(conn)
+        _CONN = conn                # published only once it is usable
+        return _CONN
 
 
 def _migrate(conn: sqlite3.Connection) -> None:
@@ -229,8 +234,15 @@ def mask_secret(value: Optional[str]) -> Optional[str]:
 
 
 def reset_for_tests() -> None:
-    """Close and forget the connection (tests point PAPERPIN_HOME elsewhere)."""
+    """Close and forget the connection (tests point PAPERPIN_HOME elsewhere).
+
+    Takes the same lock every statement takes. `check_same_thread=False` means
+    a run thread may be mid-statement on this connection right now, and closing
+    it under one deadlocks both threads — CI hung here, not on the assertion
+    the test was making.
+    """
     global _CONN
-    if _CONN is not None:
-        _CONN.close()
-        _CONN = None
+    with _LOCK:
+        if _CONN is not None:
+            _CONN.close()
+            _CONN = None

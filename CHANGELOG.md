@@ -29,6 +29,10 @@ All notable changes to paperpin are documented here. The format follows
 
 - `-o -` emitted the console codepage instead of UTF-8 on Windows,
   producing bytes no JSON parser outside Python would accept.
+- The Lab closed its shared SQLite connection without taking the lock
+  every statement takes. A close landing while a run thread was
+  mid-statement crashed the process on Windows (access violation);
+  `connect()` could also race two threads into building it twice.
 
 ## [0.1.0] - 2026-08-21
 

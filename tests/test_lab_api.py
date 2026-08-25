@@ -25,6 +25,8 @@ def client(tmp_path, monkeypatch):
     with TestClient(app_module.app, base_url="http://localhost") as c:
         c.headers["X-Lab-Token"] = "test-token"
         yield c
+    from lab.server import runner
+    runner.reset_for_tests()   # stop the workers before closing what they use
     db.reset_for_tests()
 
 
@@ -238,3 +240,52 @@ def test_single_byo_run_skips_native_pass(monkeypatch):
                                          "document_id": 42})
     runner._run_task(7)
     assert calls == [("exec", 7)]
+
+
+# The close/hammer race is run in a child process on purpose: when the bug is
+# present the two threads deadlock, and a deadlock inside the test process
+# would wedge pytest itself rather than fail a test.
+_DEADLOCK_PROBE = '''
+import os, sys, threading
+sys.path.insert(0, %r)
+os.environ["PAPERPIN_HOME"] = %r
+from lab.server import db
+db.connect()
+stop = threading.Event()
+def hammer():
+    while not stop.is_set():
+        try:
+            db.query("SELECT * FROM documents")
+        except Exception:
+            pass          # a reconnect after close is fine; a hang is not
+threading.Thread(target=hammer, daemon=True).start()
+for _ in range(200):
+    db.reset_for_tests()
+    db.connect()
+stop.set()
+print("closed cleanly")
+'''
+
+
+def test_closing_the_connection_waits_for_a_worker_mid_statement(tmp_path):
+    """CI hung here on Windows, in fixture teardown, not in any assertion.
+
+    The connection is shared across threads (`check_same_thread=False`) and
+    every statement takes `_LOCK`; closing it did not, so a close landing
+    mid-statement deadlocked both threads.
+    """
+    import subprocess
+    import sys
+
+    root = str(Path(__file__).parent.parent)
+    probe = _DEADLOCK_PROBE % (root, str(tmp_path))
+
+    try:
+        done = subprocess.run([sys.executable, "-c", probe],
+                              capture_output=True, text=True, timeout=90)
+    except subprocess.TimeoutExpired:
+        pytest.fail("closing the shared connection deadlocked against a worker "
+                    "mid-statement — reset_for_tests() must hold _LOCK")
+
+    assert done.returncode == 0, done.stderr
+    assert "closed cleanly" in done.stdout

@@ -24,6 +24,21 @@ def executor() -> ThreadPoolExecutor:
         return _EXECUTOR
 
 
+def reset_for_tests() -> None:
+    """Drain and drop the worker pool.
+
+    A run keeps touching the database after its status says `done` (the
+    native-boxes pass). Tests that tear down while that is in flight leave a
+    thread writing to a temp directory that is about to vanish, so stop
+    producing work before the connection is closed.
+    """
+    global _EXECUTOR
+    with _EXECUTOR_LOCK:
+        pool, _EXECUTOR = _EXECUTOR, None
+    if pool is not None:
+        pool.shutdown(wait=True)
+
+
 def submit_run(run_id: int) -> None:
     executor().submit(_run_task, run_id)
 
