@@ -31,7 +31,7 @@ LAYERS = {
         "test_checksums",
         "test_cache", "test_dates", "test_numbers", "test_rows", "test_schemas",
         "test_properties", "test_segmentize", "test_tables", "test_transform",
-        "test_verify_units",
+        "test_verify_stage", "test_verify_units",
     ],
     "integration": [
         "test_intake", "test_lab_api", "test_open_extraction",
