@@ -97,7 +97,9 @@ def test_golden_files_validate_against_the_published_schema(case):
     the schema that same consumer generates its types from."""
     jsonschema = pytest.importorskip("jsonschema")
 
-    schema = json.loads((ROOT / "docs" / "result.schema.json").read_text("utf-8"))
+    import paperpin
+    schema_path = Path(paperpin.__file__).parent / "result.schema.json"
+    schema = json.loads(schema_path.read_text("utf-8"))
     payload = json.loads((GOLDEN / f"{case}.json").read_text("utf-8"))
 
     jsonschema.validators.validator_for(schema)(schema).validate(payload)

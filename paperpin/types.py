@@ -17,7 +17,8 @@ from pathlib import Path
 from typing import Any, Optional
 
 
-#: Version of the result JSON's *shape*, described by docs/result.schema.json.
+#: Version of the result JSON's *shape*, described by the result.schema.json
+#: shipped beside this module.
 #: Bump it when the payload changes in a way a consumer must react to; the
 #: library version in the same block moves for every release and says nothing
 #: about the wire format.
@@ -277,7 +278,7 @@ class GroundResult:
         return {
             # `version` moves with the library; `schema` moves only when this
             # payload's shape changes, which is the number another language
-            # can actually branch on (docs/result.schema.json)
+            # can actually branch on (result.schema.json, shipped in the wheel)
             "paperpin": {"version": _version(), "schema": RESULT_SCHEMA,
                          "coordinate_space":
                          "normalized 0..1, origin top-left, upright original page"},

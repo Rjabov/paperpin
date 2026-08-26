@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/Rjabov/paperpin/blob/main/docs/result.schema.json",
+  "$id": "https://github.com/Rjabov/paperpin/blob/main/paperpin/result.schema.json",
   "title": "paperpin result",
   "description": "What paperpin.save() / `paperpin ground -o` writes, and what any consumer in any language can rely on. `paperpin.schema` is the version of THIS shape; it moves only when the payload changes, unlike `paperpin.version`.",
   "type": "object",

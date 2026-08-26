@@ -1,4 +1,4 @@
-"""The result JSON is a contract other languages read; docs/result.schema.json
+"""The result JSON is a contract other languages read; result.schema.json
 is that contract written down.
 
 Two gates. Real runs must validate against the schema — and the schema must
@@ -12,10 +12,11 @@ from pathlib import Path
 
 import pytest
 
+import paperpin
 from paperpin.types import Candidate, FieldResult, PageInfo, RESULT_SCHEMA
 
 ROOT = Path(__file__).parent.parent
-SCHEMA_PATH = ROOT / "docs" / "result.schema.json"
+SCHEMA_PATH = Path(paperpin.__file__).parent / "result.schema.json"
 DEMO = ROOT / "fixtures" / "demo"
 
 jsonschema = pytest.importorskip("jsonschema")

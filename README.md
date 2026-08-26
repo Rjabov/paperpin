@@ -229,7 +229,8 @@ provider variable yourself or pass `api_key=`.
 ### Output JSON shape
 
 The shape is a contract other languages read, so it is written down as JSON
-Schema in [`docs/result.schema.json`](docs/result.schema.json) and every
+Schema in [`paperpin/result.schema.json`](paperpin/result.schema.json),
+which ships inside the installed package, and every
 release is validated against it. `paperpin.schema` is the version of the
 *shape* — branch on that, not on `paperpin.version`, which moves every
 release. `meta` keys vary by run: tolerate ones you do not know.

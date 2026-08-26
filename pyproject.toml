@@ -79,7 +79,6 @@ packages = ["paperpin"]
 # the whole lab/web node tree in the public tarball
 include = [
   "paperpin",
-  "docs/result.schema.json",
   "tests",
   "fixtures/corpus",
   "fixtures/demo",

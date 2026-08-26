@@ -13,7 +13,7 @@ All notable changes to paperpin are documented here. The format follows
   without a temp file.
 - `paperpin pages` and `result.page_image()`: the page rasters a viewer
   draws normalized boxes on.
-- [`docs/result.schema.json`](docs/result.schema.json): the result JSON
+- [`paperpin/result.schema.json`](paperpin/result.schema.json): the result JSON
   described as JSON Schema, with `paperpin.schema` now carrying the
   version of the payload shape.
 - `fixtures/golden/`: committed samples of exactly what the engine emits,
