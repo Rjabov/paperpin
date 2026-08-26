@@ -1,4 +1,6 @@
 """OCR backend knobs that must work without loading any model."""
+from pathlib import Path
+
 import onnxruntime as ort
 
 from paperpin.backends.rapidocr_backend import _capped_session_options, _ocr_thread_cap
@@ -59,3 +61,23 @@ def test_unknown_backend_names_are_refused_by_name():
             get_backend(name)
 
     assert get_backend("auto").name == get_backend("rapidocr").name == "rapidocr"
+
+
+def test_a_bad_backend_name_fails_on_a_text_layer_document_too(tmp_path):
+    """It used to be resolved only when a page actually needed OCR, so a typo
+    passed silently on a text-layer PDF and surfaced on the caller's first
+    scan instead — a long way from the mistake."""
+    import pytest
+
+    from paperpin import ground
+
+    demo = Path(__file__).parent.parent / "fixtures" / "demo" / "demo_invoice.pdf"
+    if not demo.exists():
+        pytest.skip("demo doc not generated")
+
+    with pytest.raises(ValueError, match="unknown OCR backend"):
+        ground(demo, extraction={"total_due": "2 424.54"}, backend="tesserakt")
+
+    # the supported names still work on the same document
+    assert ground(demo, extraction={"total_due": "2 424.54"},
+                  backend="auto")["total_due"].status == "verified"

@@ -151,8 +151,13 @@ def _run(doc: Document, extraction: dict, specs: dict[str, FieldSpec],
             if not (spec and spec.type == FieldType.TABLE):
                 specs[name] = _infer_table_spec(name, tables[name])
 
+    # resolve the backend even when nothing needs OCR: a wrong or removed name
+    # used to pass silently on a text-layer document and only surface on the
+    # caller's first scan, long after the typo. Constructing one is free —
+    # the OCR engine itself loads lazily on first use.
+    backend = get_backend(backend_name)
     needs_ocr = any(p.route == "ocr" for p in doc.pages)
-    ocr_backend = get_backend(backend_name) if needs_ocr else None
+    ocr_backend = backend if needs_ocr else None
     timer.stage("intake_s")
     _notify(progress, "intake", "end", {"pages": len(doc.pages)})
 

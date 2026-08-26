@@ -42,6 +42,9 @@ All notable changes to paperpin are documented here. The format follows
 
 - `-o -` emitted the console codepage instead of UTF-8 on Windows,
   producing bytes no JSON parser outside Python would accept.
+- An unknown `backend=` name was only rejected when a page actually
+  needed OCR, so a typo passed silently on a text-layer document and
+  surfaced on the caller's first scan instead.
 - The Lab closed its shared SQLite connection without taking the lock
   every statement takes. A close landing while a run thread was
   mid-statement crashed the process on Windows (access violation);
