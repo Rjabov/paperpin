@@ -124,7 +124,7 @@ show_missing = true
 # from 35% to 75%) and holds the core engine to a separate, higher floor.
 # All three ratchet UP as gaps close; lowering one is a decision to argue
 # for in a PR, never a quick fix for a red build.
-fail_under = 83
+fail_under = 85
 exclude_also = [
   "if __name__ == .__main__.:",
 ]

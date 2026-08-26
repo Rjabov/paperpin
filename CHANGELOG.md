@@ -26,6 +26,10 @@ All notable changes to paperpin are documented here. The format follows
   tests for the laws that must hold on every input, performance gates on
   line-item matching and pipeline work volume, and adapter tests that
   fake the network.
+- Tests for the OCR segment cache (a wrong cache entry means wrong pins
+  on a re-run) and for the verification stage's demotion paths — the
+  five-status promise itself: a check that disagrees must demote a
+  `verified` field and must never re-label an `ambiguous` one.
 
 ### Removed
 

@@ -91,9 +91,9 @@ jobs:
           coverage combine coverage-data
           coverage report
       - name: Core engine floor (align, verify, geometry, intake, outputs, api)
-        run: coverage report --include='paperpin/align/*,paperpin/verify/*,paperpin/geometry/*,paperpin/intake/*,paperpin/outputs/*,paperpin/types.py,paperpin/schemas.py,paperpin/api.py' --fail-under=88
+        run: coverage report --include='paperpin/align/*,paperpin/verify/*,paperpin/geometry/*,paperpin/intake/*,paperpin/outputs/*,paperpin/types.py,paperpin/schemas.py,paperpin/api.py' --fail-under=89
       - name: Whole-package floor
-        run: coverage report --fail-under=85
+        run: coverage report --fail-under=86
       - name: Coverage summary
         if: always()
         run: '{ echo "### Coverage (all jobs combined)"; echo; echo "```"; coverage report; echo "```"; } >> "$GITHUB_STEP_SUMMARY"'
