@@ -29,7 +29,7 @@ LAYERS = {
     "unit": [
         "test_adapters", "test_aligner", "test_backends", "test_canon",
         "test_checksums",
-        "test_dates", "test_numbers", "test_rows", "test_schemas",
+        "test_cache", "test_dates", "test_numbers", "test_rows", "test_schemas",
         "test_properties", "test_segmentize", "test_tables", "test_transform",
         "test_verify_units",
     ],
