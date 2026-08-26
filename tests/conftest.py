@@ -39,7 +39,8 @@ LAYERS = {
     ],
     "contract": [
         "test_cli", "test_demo_doc", "test_examples", "test_golden_result",
-        "test_overlay", "test_page_images", "test_result_schema",
+        "test_overlay", "test_page_images", "test_readme",
+        "test_result_schema",
     ],
     "e2e": ["test_corpus_e2e", "test_degraded_e2e"],
     "security": ["test_security"],

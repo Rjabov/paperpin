@@ -68,7 +68,7 @@ pattern = 'src="docs/assets/'
 replacement = 'src="https://raw.githubusercontent.com/Rjabov/paperpin/main/docs/assets/'
 
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
-pattern = '\]\((fixtures/|tests/|examples/|CONTRIBUTING\.md|SECURITY\.md|LICENSE)'
+pattern = '\]\((paperpin/|fixtures/|tests/|examples/|docs/|CONTRIBUTING\.md|SECURITY\.md|LICENSE)'
 replacement = '](https://github.com/Rjabov/paperpin/blob/main/\g<1>'
 
 [tool.hatch.build.targets.wheel]
