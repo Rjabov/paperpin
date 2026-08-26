@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "paperpin"
-version = "0.2.0"
+version = "0.2.1"
 description = "Pin every value an LLM extracts from a document to the exact spot on the page it came from, and flag the values that aren't there at all."
 dynamic = ["readme"]
 license = "MIT"
